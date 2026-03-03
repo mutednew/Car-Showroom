@@ -1,0 +1,72 @@
+.filterWrapper {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--spacing-md) 0;
+    margin-bottom: var(--spacing-xl);
+    transition: all var(--transition-fast);
+}
+
+.inputContainer {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+    color: var(--color-text-muted);
+    position: absolute;
+    left: 0;
+    transition: color var(--transition-fast);
+}
+
+.input {
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-xl) var(--spacing-sm) 40px;
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--color-text-main);
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid var(--color-border);
+    outline: none;
+    transition: border-color var(--transition-fast);
+}
+
+.input::placeholder {
+    color: var(--color-border);
+    font-weight: 300;
+}
+
+.input:focus {
+    border-bottom-color: var(--color-text-main);
+}
+
+.input:focus + .icon,
+.inputContainer:focus-within .icon {
+    color: var(--color-text-main);
+}
+
+.loader {
+    position: absolute;
+    right: 0;
+    bottom: -2px;
+    height: 2px;
+    background-color: var(--color-text-main);
+    animation: loading 1.5s infinite ease-in-out;
+}
+
+@keyframes loading {
+    0% { width: 0; left: 0; right: auto; }
+    50% { width: 100%; left: 0; right: auto; }
+    51% { width: 100%; right: 0; left: auto; }
+    100% { width: 0; right: 0; left: auto; }
+}

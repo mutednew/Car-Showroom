@@ -1,9 +1,25 @@
-import { getCars } from '@/services/api';
-import CarCard from '@/components/CarCard/CarCard';
-import styles from './page.module.css';
+import { getCars } from "@/services/api";
+import CarCard from "@/components/CarCard/CarCard";
+import FilterBar from "@/components/FilterBar/FilterBar";
+import styles from "./page.module.css";
 
-export default async function Home() {
+interface HomeProps {
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}
+
+export default async function Home({ searchParams }: HomeProps) {
     const { data: cars, error } = await getCars();
+
+    const resolvedParams = await searchParams;
+    const query = typeof resolvedParams.query === "string" ? resolvedParams.query.toLowerCase() : "";
+
+    const filteredCars = cars?.filter((car) => {
+        if (!query) return true;
+        return (
+            car.title.toLowerCase().includes(query) ||
+            car.brand?.toLowerCase().includes(query)
+        );
+    });
 
     if (error) {
         return (
@@ -16,29 +32,29 @@ export default async function Home() {
         );
     }
 
-    if (!cars || cars.length === 0) {
-        return (
-            <div className="container">
-                <div className={styles.messageBox}>
-                    <h2>No vehicles available.</h2>
-                    <p>Please check back later.</p>
-                </div>
-            </div>
-        );
-    }
-
     return (
-        <div className="container">
-            <header className={styles.header}>
-                <h1 className={styles.title}>Explore Models</h1>
-                <p className={styles.subtitle}>Discover the perfect vehicle for your next adventure.</p>
-            </header>
+        <>
+            <FilterBar />
 
-            <div className={styles.grid}>
-                {cars.map((car) => (
-                    <CarCard key={car.id} car={car} />
-                ))}
+            <div className="container">
+                <header className={styles.header}>
+                    <h1 className={styles.title}>Explore Models</h1>
+                    <p className={styles.subtitle}>Discover the perfect vehicle for your next adventure.</p>
+                </header>
+
+                {!filteredCars || filteredCars.length === 0 ? (
+                    <div className={styles.messageBox}>
+                        <h2>No models found.</h2>
+                        <p>Try adjusting your search criteria.</p>
+                    </div>
+                ) : (
+                    <div className={styles.grid}>
+                        {filteredCars.map((car) => (
+                            <CarCard key={car.id} car={car} />
+                        ))}
+                    </div>
+                )}
             </div>
-        </div>
+        </>
     );
 }
