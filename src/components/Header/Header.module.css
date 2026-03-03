@@ -1,0 +1,45 @@
+.header {
+    border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-bg);
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+}
+
+.logo {
+    font-size: 1.25rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+.logoBold {
+    font-weight: 700;
+    color: var(--color-text-main);
+}
+
+.logoLight {
+    font-weight: 300;
+    color: var(--color-text-muted);
+    margin-left: 4px;
+}
+
+.nav {
+    display: flex;
+    gap: var(--spacing-lg);
+}
+
+.navLink {
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+    color: var(--color-text-main);
+}
+
+.navLink:hover {
+    color: var(--color-accent);
+}
