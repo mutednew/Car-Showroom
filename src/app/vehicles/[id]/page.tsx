@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getCarById } from '@/services/api';
 import styles from './page.module.css';
+import ReviewsSection from "@/components/ReviewsSection/ReviewsSection";
 
 interface CarDetailsProps {
     params: Promise<{ id: string }>;
@@ -78,7 +79,7 @@ export default async function CarDetailsPage({ params }: CarDetailsProps) {
                 </div>
 
                 <div className={styles.reviewsWrapper}>
-                    <h2 className={styles.sectionTitle}>Customer Reviews (Coming next)</h2>
+                    <ReviewsSection initialReviews={car.reviews} carId={car.id} />
                 </div>
             </div>
         </div>
